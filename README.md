@@ -12,6 +12,7 @@ What things you need to install the software and how to install them
 
 * Download [Node](https://nodejs.org/en/) and npm
 * `npm install` to install all our node dependencies
+* Download and install MongoDB
 
 ## Running the server
 * run `npm start` to start the server.
