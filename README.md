@@ -1,4 +1,4 @@
-# cryto Monitor API with Node.js
+# Cryptocurrency Monitor API with Node.js
 
 Wrapper of CoinGecko (https://www.coingecko.com/en/api) API REST.
 
@@ -172,7 +172,7 @@ server.
 
 User is at least one of the following in relation to the Account requested:
 
-* Header: Authorization Bearer <token>
+* Header: Authorization Bearer <token_data>
 
 **Data**: `{}`
 
@@ -238,7 +238,7 @@ Add a cryptocurrency to the user account. The coins are unique
 
 User is at least one of the following in relation to the Account requested:
 
-* Header: Authorization Bearer <token>
+* Header: Authorization Bearer <token_data>
 
 **Data constraints**
 
@@ -302,12 +302,13 @@ Provide name of Account to be created. All fields required.
 
 # Show user top N crypto currencies
 
-Show a single Account if current User has access permissions to it.
+It must be possible to obtain the top N of cryptocurrencies of a user
 
 **URL** : `/api/coins/topN/:username`
 
-**URL Parameters** : `username=[string]` where `username` is the username of the Account on the
-server.
+**URL Parameters** : `username=[string]` where `username` is the username of the Account on the server.
+`n=[number]` where `n` is the amount of cryptocurrencies to show. 
+`desc=[boolean]` where `desc` true/false to order data depending on users default currency. Descending by default.
 
 **Method** : `GET`
 
@@ -317,7 +318,7 @@ server.
 
 User is at least one of the following in relation to the Account requested:
 
-* Header: Authorization Bearer <token>
+* Header: Authorization Bearer <token_data>
 
 **Data**: `{}`
 
@@ -345,7 +346,8 @@ User is at least one of the following in relation to the Account requested:
             "usd": 0.659741,
             "eur": 0.543878
         }
-    }
+    },
+    ...
 ]
 ```
 
