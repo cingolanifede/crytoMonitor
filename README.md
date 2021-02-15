@@ -306,8 +306,9 @@ It must be possible to obtain the top N of cryptocurrencies of a user
 
 **URL** : `/api/coins/topN/:username`
 
-**URL Parameters** : `username=[string]` where `username` is the username of the Account on the server.
-`n=[number]` where `n` is the amount of cryptocurrencies to show. 
+**URL Parameters (optional) :**
+`username=[string]` where `username` is the username of the Account on the server.
+`n=[number]` where `n` is the amount of cryptocurrencies to show.
 `desc=[boolean]` where `desc` true/false to order data depending on users default currency. Descending by default.
 
 **Method** : `GET`
