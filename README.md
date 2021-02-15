@@ -102,3 +102,276 @@ Provide name of Account to be created. All fields required.
 }
 ```
 
+
+# Login to Account
+
+Login user endpoint
+
+**URL** : `/api/users/login`
+
+**Method** : `GET`
+
+**Auth required** : NO
+
+**Data constraints**
+
+Provide username and password to login. All fields required.
+
+```json
+{
+        "username": "xxxxx",
+        "password": "xxxx",
+}
+```
+
+## Success Response
+
+**Condition** : If Account exists and Authorized User has required permissions.
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "data": {
+        "token": <token_data>
+    }
+}
+```
+
+## Error Responses
+
+**Condition** : If Account exists but Authorized User does not have required
+permissions.
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+
+```json
+{
+    "error": "User login fail"
+}
+```
+
+# Show Single Account
+
+Show a single Account if current User has access permissions to it.
+
+**URL** : `/api/users/:username`
+
+**URL Parameters** : `username=[string]` where `username` is the username of the Account on the
+server.
+
+**Method** : `GET`
+
+**Auth required** : YES
+
+**Permissions required** :
+
+User is at least one of the following in relation to the Account requested:
+
+* Header: Authorization Bearer <token>
+
+**Data**: `{}`
+
+## Success Response
+
+**Condition** : If Account exists and Authorized User has required permissions.
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "data": {
+        "currency": "ars",
+        "_id": "602adc95f17a544b287147e7",
+        "username": "xxxxxxxx",
+        "password": "$2b$10$22mQh3dBX8dxssxs.rx2KmoxNd.U.WeYRy1jeuaqop4lRxene4mfTWR9Yq",
+        "createdAt": "2021-02-15T20:41:57.074Z",
+        "updatedAt": "2021-02-15T20:41:57.074Z",
+        "__v": 0
+    }
+}
+```
+
+## Error Responses
+
+**Condition** : If Account does not exist with `username` of provided `username` parameter.
+
+**Code** : `400 NOT FOUND`
+
+**Content** : `
+{
+    "error": "User not found"
+}`
+
+### Or
+
+**Condition** : If Account exists but Authorized User does not have required
+permissions or valid token. 
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+
+```json
+{
+    "error": "invalid signature"
+}
+```
+
+# Add cryptocurrencies to User's Account
+
+Add a cryptocurrency to the user account. The coins are unique
+
+**URL** : `/api/users/register`
+
+**Method** : `POST`
+
+**Auth required** : YES
+
+**Permissions required** :
+
+User is at least one of the following in relation to the Account requested:
+
+* Header: Authorization Bearer <token>
+
+**Data constraints**
+
+Provide name of Account to be created. All fields required.
+
+```json
+{
+    "crypto": "0chain",
+    "symbol": "zcn",
+    "name": "0chain"
+}
+```
+
+## Success Response
+
+**Condition** : If everything is OK and a new currency is added to users account
+
+**Code** : `200 CREATED`
+
+**Content example**
+
+```json
+{
+    "data": {
+        "currency": "ars",
+        "_id": "602adc95f17a544b287147e7",
+        "username": "usernamexxxxx",
+        "password": "$2b$10$22mQh3dBX8d.rx2KmoxNd.U.WeYRy1jeuaqop4lRxene4mfTWR9Yq",
+        "createdAt": "2021-02-15T20:41:57.074Z",
+        "updatedAt": "2021-02-15T20:41:57.074Z",
+        "__v": 0
+    }
+}
+```
+
+## Error Responses
+
+**Condition** : If currency already exists for User.
+
+**Code** : `400 BAD REQUEST`
+
+**Content** : 
+`{
+    "error": "Crypto already exists"
+}
+`
+
+### Or
+
+**Condition** : If fields are missed.
+
+**Code** : `400 BAD REQUEST`
+
+**Content example**
+
+```json
+{
+    "error": "\"[field]\" is required"
+}
+```
+
+# Show user top N crypto currencies
+
+Show a single Account if current User has access permissions to it.
+
+**URL** : `/api/coins/topN/:username`
+
+**URL Parameters** : `username=[string]` where `username` is the username of the Account on the
+server.
+
+**Method** : `GET`
+
+**Auth required** : YES
+
+**Permissions required** :
+
+User is at least one of the following in relation to the Account requested:
+
+* Header: Authorization Bearer <token>
+
+**Data**: `{}`
+
+## Success Response
+
+**Condition** : If user has coins added to its account it will sort descendent by default on currency defined.
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+[
+    {
+        "symbol": "zcn",
+        "name": "0chain",
+        "image": {
+            "thumb": "https://assets.coingecko.com/coins/images/4934/thumb/0_Black-svg.png?1600757954",
+            "small": "https://assets.coingecko.com/coins/images/4934/small/0_Black-svg.png?1600757954",
+            "large": "https://assets.coingecko.com/coins/images/4934/large/0_Black-svg.png?1600757954"
+        },
+        "last_updated": "2021-02-15T22:14:16.442Z",
+        "currency": {
+            "ars": 58.36,
+            "usd": 0.659741,
+            "eur": 0.543878
+        }
+    }
+]
+```
+
+## Error Responses
+
+**Condition** : If Account does not exist with `username` of provided `username` parameter.
+
+**Code** : `400 NOT FOUND`
+
+**Content** : `
+{
+    "error": "User not found"
+}`
+
+### Or
+
+**Condition** : If Account exists but Authorized User does not have required
+permissions or valid token. 
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+
+```json
+{
+    "error": "invalid signature"
+}
+```
+
