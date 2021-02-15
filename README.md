@@ -12,7 +12,14 @@ What things you need to install the software and how to install them
 
 * Download [Node](https://nodejs.org/en/) and npm
 * `npm install` to install all our node dependencies
-* Download and install MongoDB
+* Download and install MongoDB for local use
+
+**You can create use a mongodb server at mongodb Atlas service for free. Create an account and follow the instructions**
+
+* Change in /helpers/connections.js `db_path` variable.
+* `const db_path = mongodb+srv://username>:<password>@cluster0.ncdk5.mongodb.net/<dbname>?retryWrites=true&w=majority`
+
+
 
 ## Running the server
 * run `npm start` to start the server.
@@ -41,15 +48,15 @@ Create an Account for the authenticated User if an Account for that User does no
 
 **Data constraints**
 
-Provide name of Account to be created. All fields required.
+Provide name of Account to be created. All fields required. Currency could be `ars`, `usd`, `eur`.
 
 ```json
 {
-        "first_name": "My name", 
-        "last_name": "My Lastname",
-        "username": "xxxxx",
-        "password": "xxxx",
-        "currency":"ars"
+    "firstName": "User",
+    "lastName": "UserLast",
+    "username": "myusername",
+    "password": "mypassword",
+    "currency": "ars | usd | eur"
 }
 ```
 
