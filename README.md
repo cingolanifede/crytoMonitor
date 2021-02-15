@@ -23,6 +23,34 @@ What things you need to install the software and how to install them
 
 ## Running the server
 * run `npm start` to start the server.
+* create `.env` file in root directory and define the constants.
+
+```
+# secret for encryption of jwt signature
+JWT_KEY=my_super_secret_key
+
+# number of rounds for Blowfish algorithm for hashing user password
+BCRYPT_ROUNDS=10
+
+# lifetime of the token (in seconds)
+JWT_LIFETIME=86400
+
+# algorithm used in token signing
+JWT_ALGORITHM=HS256
+
+# server port
+PORT=8080
+
+# server name
+SERVER=localhost
+
+# db port
+DBPORT=27017
+
+# db name
+DBNAME=dbname
+```
+
 
 
 ## Built With
