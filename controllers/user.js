@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const Joi = require('@hapi/joi');
 
-// const error_types = require('./error_types');
 //Validations
 const schemaRegister = Joi.object({
   firstName: Joi.string().empty().required(),
@@ -72,9 +71,19 @@ let controller = {
     }, (error, user) => {
       if (error || !user) {
         return res.status(400).json({
-          error:'User login fail'
+          error: 'User login fail'
         });
       } else {
+        const {
+          error
+        } = schemaLogin.validate(req.body);
+
+        if (error) {
+          return res.status(400).json({
+            error: error.details[0].message
+          });
+        }
+
         const payload = {
           sub: user._id,
           exp: Date.now() + parseInt(config.JWT_LIFETIME),

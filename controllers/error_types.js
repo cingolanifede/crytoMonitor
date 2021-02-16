@@ -1,6 +1,4 @@
 //definiciones de tipos de errores.
-//podríamos haber usado sintáxis class de es6
-
 const error_types = {
     Error401: function (msg) { //no autorizado
         let err = Error.apply(this, [msg]);
@@ -11,7 +9,7 @@ const error_types = {
     },
     Error403: function (msg) { //prohibido
         let err = Error.apply(this, [msg]);
-        this.name = err.name = "Error403";
+        this.name = err.name = 'Error403';
         this.message = err.message;
         this.stack = err.stack;
         return this;
