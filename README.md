@@ -10,20 +10,19 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-* Download [Node](https://nodejs.org/en/) and npm
-* `npm install` to install all our node dependencies
-* Download and install MongoDB for local use
+- Download [Node](https://nodejs.org/en/) and npm
+- `npm install` to install all our node dependencies
+- Download and install MongoDB for local use
 
 **You can create and use a mongodb server at mongodb Atlas service for free. Create an account and follow the instructions**
 
-* Just change in /helpers/connections.js `db_path` variable.
-* `const db_path = mongodb+srv://username>:<password>@cluster0.ncdk5.mongodb.net/<dbname>?retryWrites=true&w=majority`
-
-
+- Just change in /helpers/connections.js `db_path` variable.
+- `const db_path = mongodb+srv://username>:<password>@cluster0.ncdk5.mongodb.net/<dbname>?retryWrites=true&w=majority`
 
 ## Running the server
-* run `npm start` to start the server.
-* create `.env` file in root directory and define the constants.
+
+- run `npm start` to start the server.
+- create `.env` file in root directory and define the constants.
 
 ```
 # secret for encryption of jwt signature
@@ -51,12 +50,10 @@ DBPORT=27017
 DBNAME=dbname
 ```
 
-
-
 ## Built With
-* [Express](https://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js
-* [Node.js](https://nodejs.org/en/) - Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.]
 
+- [Express](https://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js
+- [Node.js](https://nodejs.org/en/) - Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.]
 
 # REST API
 
@@ -80,17 +77,17 @@ Provide name of Account to be created. All fields required. Currency could be `a
 
 ```json
 {
-    "firstName": "User",
-    "lastName": "UserLast",
-    "username": "myusername",
-    "password": "mypassword",
-    "currency": "ars | usd | eur"
+  "firstName": "User",
+  "lastName": "UserLast",
+  "username": "myusername",
+  "password": "mypassword",
+  "currency": "ars | usd | eur"
 }
 ```
 
 ## Success Response
 
-**Condition** : If everything is OK and an Account didn't exist for this User.
+**Condition** : If everything is OK and the account didn't exist for this user.
 
 **Code** : `200 CREATED`
 
@@ -118,10 +115,8 @@ Provide name of Account to be created. All fields required. Currency could be `a
 
 **Code** : `400 BAD REQUEST`
 
-**Content** : 
-  `{
-    "error": "Username already exists"
-}`
+**Content** :
+`{ "error": "Username already exists" }`
 
 ### Or
 
@@ -133,10 +128,9 @@ Provide name of Account to be created. All fields required. Currency could be `a
 
 ```json
 {
-    "error": "\"[field]\" is required"
+  "error": "\"[field]\" is required"
 }
 ```
-
 
 # Login to Account
 
@@ -144,7 +138,7 @@ Login user endpoint
 
 **URL** : `/api/users/login`
 
-**Method** : `GET`
+**Method** : `POST`
 
 **Auth required** : NO
 
@@ -154,8 +148,8 @@ Provide username and password to login. All fields required.
 
 ```json
 {
-        "username": "xxxxx",
-        "password": "xxxx",
+  "username": "myusername",
+  "password": "mypassword"
 }
 ```
 
@@ -180,13 +174,13 @@ Provide username and password to login. All fields required.
 **Condition** : If Account exists but Authorized User does not have required
 permissions.
 
-**Code** : `403 FORBIDDEN`
+**Code** : `400 BAD REQUEST`
 
 **Content** :
 
 ```json
 {
-    "error": "User login fail"
+  "error": "User login fail"
 }
 ```
 
@@ -207,7 +201,7 @@ server.
 
 User is at least one of the following in relation to the Account requested:
 
-* Header: Authorization Bearer <token_data>
+- Header: Authorization Bearer <token_data>
 
 **Data**: `{}`
 
@@ -221,15 +215,15 @@ User is at least one of the following in relation to the Account requested:
 
 ```json
 {
-    "data": {
-        "currency": "ars",
-        "_id": "602adc95f17a544b287147e7",
-        "username": "xxxxxxxx",
-        "password": "$2b$10$22mQh3dBX8dxssxs.rx2KmoxNd.U.WeYRy1jeuaqop4lRxene4mfTWR9Yq",
-        "createdAt": "2021-02-15T20:41:57.074Z",
-        "updatedAt": "2021-02-15T20:41:57.074Z",
-        "__v": 0
-    }
+  "data": {
+    "currency": "ars",
+    "_id": "602adc95f17a544b287147e7",
+    "username": "xxxxxxxx",
+    "password": "$2b$10$22mQh3dBX8dxssxs.rx2KmoxNd.U.WeYRy1jeuaqop4lRxene4mfTWR9Yq",
+    "createdAt": "2021-02-15T20:41:57.074Z",
+    "updatedAt": "2021-02-15T20:41:57.074Z",
+    "__v": 0
+  }
 }
 ```
 
@@ -239,15 +233,26 @@ User is at least one of the following in relation to the Account requested:
 
 **Code** : `400 NOT FOUND`
 
-**Content** : `
+**Content** : ` { "error": "User not found" }`
+
+### Or
+
+**Condition** : If Account exists and token is not valid
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+
+```json
 {
-    "error": "User not found"
-}`
+  "error": "invalid signature"
+}
+```
 
 ### Or
 
 **Condition** : If Account exists but Authorized User does not have required
-permissions or valid token. 
+permissions or valid token.
 
 **Code** : `403 FORBIDDEN`
 
@@ -255,7 +260,168 @@ permissions or valid token.
 
 ```json
 {
-    "error": "invalid signature"
+  "error": "invalid signature"
+}
+```
+
+# Show all cryptocurrency from server
+
+Show a single Account if current User has access permissions to it.
+
+**URL** : `/api/coins`
+
+**URL Parameters** : NO
+
+**Method** : `GET`
+
+**Auth required** : YES
+
+**Permissions required** :
+
+User is at least one of the following in relation to the Account requested:
+
+- Header: Authorization Bearer <token_data>
+
+**Data**: `{}`
+
+## Success Response
+
+**Condition** : If Account exists and Authorized User has required permissions.
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+  "data": [
+    {
+      "id": "01coin",
+      "symbol": "zoc",
+      "name": "01coin"
+    },
+    {
+      "id": "bitcoin",
+      "symbol": "btc",
+      "name": "Bitcoin"
+    }, ...
+  ]
+}
+```
+
+## Error Responses
+
+**Condition** : If external server fails or url not found.
+
+**Code** : `400 NOT FOUND`
+
+**Content** : ` { "error": "[url] not found" }`
+
+### Or
+
+**Condition** : If Account exists and token is not valid
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+
+```json
+{
+  "error": "invalid signature"
+}
+```
+
+### Or
+
+**Condition** : If Account exists but Authorized User does not have required
+permissions or valid token.
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+
+```json
+{
+  "error": "invalid signature"
+}
+```
+
+# Show cryptocurrency by id
+
+Show a single Account if current User has access permissions to it.
+
+**URL** : `/api/coins/crypto/:id`
+
+**URL Parameters** : `id=[string]` where `id` is the cryptocurrency id.
+
+**Method** : `GET`
+
+**Auth required** : YES
+
+**Permissions required** :
+
+User is at least one of the following in relation to the Account requested:
+
+- Header: Authorization Bearer <token_data>
+
+**Data**: `{}`
+
+## Success Response
+
+**Condition** : If Account exists and Authorized User has required permissions.
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+  "data": {
+    "currency": "ars",
+    "_id": "602adc95f17a544b287147e7",
+    "username": "xxxxxxxx",
+    "password": "$2b$10$22mQh3dBX8dxssxs.rx2KmoxNd.U.WeYRy1jeuaqop4lRxene4mfTWR9Yq",
+    "createdAt": "2021-02-15T20:41:57.074Z",
+    "updatedAt": "2021-02-15T20:41:57.074Z",
+    "__v": 0
+  }
+}
+```
+
+## Error Responses
+
+**Condition** : If Account does not exist with `username` of provided `username` parameter.
+
+**Code** : `400 NOT FOUND`
+
+**Content** : ` { "error": "User not found" }`
+
+### Or
+
+**Condition** : If Account exists and token is not valid
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+
+```json
+{
+  "error": "invalid signature"
+}
+```
+
+### Or
+
+**Condition** : If Account exists but Authorized User does not have required
+permissions or valid token.
+
+**Code** : `403 FORBIDDEN`
+
+**Content** :
+
+```json
+{
+  "error": "invalid signature"
 }
 ```
 
@@ -273,7 +439,7 @@ Add a cryptocurrency to the user account. The coins are unique
 
 User is at least one of the following in relation to the Account requested:
 
-* Header: Authorization Bearer <token_data>
+- Header: Authorization Bearer <token_data>
 
 **Data constraints**
 
@@ -281,9 +447,9 @@ Provide name of Account to be created. All fields required.
 
 ```json
 {
-    "crypto": "0chain",
-    "symbol": "zcn",
-    "name": "0chain"
+  "crypto": "0chain",
+  "symbol": "zcn",
+  "name": "0chain"
 }
 ```
 
@@ -297,15 +463,15 @@ Provide name of Account to be created. All fields required.
 
 ```json
 {
-    "data": {
-        "currency": "ars",
-        "_id": "602adc95f17a544b287147e7",
-        "username": "usernamexxxxx",
-        "password": "$2b$10$22mQh3dBX8d.rx2KmoxNd.U.WeYRy1jeuaqop4lRxene4mfTWR9Yq",
-        "createdAt": "2021-02-15T20:41:57.074Z",
-        "updatedAt": "2021-02-15T20:41:57.074Z",
-        "__v": 0
-    }
+  "data": {
+    "currency": "ars",
+    "_id": "602adc95f17a544b287147e7",
+    "username": "usernamexxxxx",
+    "password": "$2b$10$22mQh3dBX8d.rx2KmoxNd.U.WeYRy1jeuaqop4lRxene4mfTWR9Yq",
+    "createdAt": "2021-02-15T20:41:57.074Z",
+    "updatedAt": "2021-02-15T20:41:57.074Z",
+    "__v": 0
+  }
 }
 ```
 
@@ -315,11 +481,8 @@ Provide name of Account to be created. All fields required.
 
 **Code** : `400 BAD REQUEST`
 
-**Content** : 
-`{
-    "error": "Crypto already exists"
-}
-`
+**Content** :
+`{ "error": "Crypto already exists" } `
 
 ### Or
 
@@ -331,7 +494,21 @@ Provide name of Account to be created. All fields required.
 
 ```json
 {
-    "error": "\"[field]\" is required"
+  "error": "\"[field]\" is required"
+}
+```
+
+### Or
+
+**Condition** : If Account exists and token is not valid
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+
+```json
+{
+  "error": "invalid signature"
 }
 ```
 
@@ -354,7 +531,7 @@ It must be possible to obtain the top N of cryptocurrencies of a user
 
 User is at least one of the following in relation to the Account requested:
 
-* Header: Authorization Bearer <token_data>
+- Header: Authorization Bearer <token_data>
 
 **Data**: `{}`
 
@@ -393,15 +570,12 @@ User is at least one of the following in relation to the Account requested:
 
 **Code** : `400 NOT FOUND`
 
-**Content** : `
-{
-    "error": "User not found"
-}`
+**Content** : ` { "error": "User not found" }`
 
 ### Or
 
 **Condition** : If Account exists but Authorized User does not have required
-permissions or valid token. 
+permissions or valid token.
 
 **Code** : `403 FORBIDDEN`
 
@@ -409,7 +583,20 @@ permissions or valid token.
 
 ```json
 {
-    "error": "invalid signature"
+  "error": "invalid signature"
 }
 ```
 
+### Or
+
+**Condition** : If Account exists and token is not valid
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content** :
+
+```json
+{
+  "error": "invalid signature"
+}
+```

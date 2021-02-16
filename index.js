@@ -12,6 +12,7 @@ require('./authentication');
 //mongoDB connection
 mongoDb.connectDb();
 
+const index_routes = require('./routes/index');
 const user_routes = require('./routes/user');
 const coin_routes = require('./routes/coin');
 const customMdw = require('./middleware/custom');
@@ -34,6 +35,7 @@ app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //conectamos todos los routers
+app.use('/', index_routes);
 app.use('/api/users', user_routes);
 app.use('/api/coins', coin_routes);
 

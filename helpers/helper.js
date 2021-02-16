@@ -6,7 +6,7 @@ const doRequest = (url) => {
       json: true
     }, (err, res2, body) => {
       if (err) {
-        reject(error);
+        reject(url +' not found');
       }
       resolve(body);
     });
