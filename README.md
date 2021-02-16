@@ -14,9 +14,9 @@ What things you need to install the software and how to install them
 * `npm install` to install all our node dependencies
 * Download and install MongoDB for local use
 
-**You can create use a mongodb server at mongodb Atlas service for free. Create an account and follow the instructions**
+**You can create and use a mongodb server at mongodb Atlas service for free. Create an account and follow the instructions**
 
-* Change in /helpers/connections.js `db_path` variable.
+* Just change in /helpers/connections.js `db_path` variable.
 * `const db_path = mongodb+srv://username>:<password>@cluster0.ncdk5.mongodb.net/<dbname>?retryWrites=true&w=majority`
 
 
