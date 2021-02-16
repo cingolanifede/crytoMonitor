@@ -21,8 +21,8 @@ What things you need to install the software and how to install them
 
 ## Running the server
 
-- run `npm start` to start the server.
-- create `.env` file in root directory and define the constants.
+- Create `.env` file in root directory and define the constants.
+- Run `npm start` to start the server.
 
 ```
 # secret for encryption of jwt signature
@@ -58,6 +58,7 @@ DBNAME=dbname
 # REST API
 
 The REST API to the example app is described below.
+# User Routes
 
 # Create User's Account
 
@@ -264,6 +265,8 @@ permissions or valid token.
 }
 ```
 
+# Coin Routes
+
 # Show all cryptocurrency from server
 
 Show a single Account if current User has access permissions to it.
@@ -429,7 +432,7 @@ permissions or valid token.
 
 Add a cryptocurrency to the user account. The coins are unique
 
-**URL** : `/api/users/register`
+**URL** : `/api/coins/add`
 
 **Method** : `POST`
 
@@ -516,10 +519,9 @@ Provide name of Account to be created. All fields required.
 
 It must be possible to obtain the top N of cryptocurrencies of a user
 
-**URL** : `/api/coins/topN/:username`
+**URL** : `/api/coins/topN`
 
 **URL Parameters (optional) :**
-`username=[string]` where `username` is the username of the Account on the server.
 `n=[number]` where `n` is the amount of cryptocurrencies to show.
 `desc=[boolean]` where `desc` true/false to order data depending on users default currency. Descending by default.
 

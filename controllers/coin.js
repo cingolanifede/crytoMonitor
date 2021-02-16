@@ -14,7 +14,8 @@ const schemaCrypto = Joi.object({
 let controller = {
   addCoin: async (req, res) => {
     try {
-      const username = req.params.username;
+      console.log(req.user.username);
+      const username = req.user.username;
       const {
         error
       } = schemaCrypto.validate(req.body);
@@ -70,7 +71,7 @@ let controller = {
   },
   getTopN: async (req, res) => {
     try {
-      const username = req.params.username;
+      const username = req.user.username;
       let n = req.query.n;
       let desc;
       if (typeof req.query.desc !== 'undefined') {
@@ -126,7 +127,7 @@ let controller = {
       return res.status(200).send(await Promise.all(sorted));
     } catch (error) {
       return res.status(400).json({
-        error
+        error: error.toString()
       });
     }
   },
@@ -141,20 +142,13 @@ let controller = {
       });
     } catch (error) {
       return res.status(400).json({
-        error
+        error: error.toString()
       });
     }
   },
   getCoinById: async (req, res) => {
     try {
-      const user = await User.findOne({
-        username: req.query.user
-      });
-      if (!user) {
-        return res.status(400).json({
-          error: 'User not found'
-        });
-      }
+      const coinType = req.query.currency;
       const url = 'https://api.coingecko.com/api/v3/coins/' + req.params.id;
       const response = await Helper.doRequest(url);
 
@@ -163,8 +157,8 @@ let controller = {
         name: response.name,
         image: response.image,
         price: {
-          currency: user.currency,
-          value: response.market_data.current_price[user.currency]
+          currency: coinTypse,
+          value: response.market_data.current_price[coinType]
         }
       };
       res.setHeader('Content-Type', 'application/json');
@@ -172,8 +166,8 @@ let controller = {
         data: newObj
       });
     } catch (error) {
-      return res.status(400).json({
-        error
+      res.status(400).json({
+        error: error.toString()
       });
     }
   }
