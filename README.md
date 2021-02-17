@@ -50,6 +50,12 @@ DBPORT=27017
 DBNAME=dbname
 ```
 
+## Running testing
+
+- Go to `test` folder in project directory.
+- Run `npm run test` to start the server.
+
+
 ## Built With
 
 - [Express](https://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js
@@ -430,7 +436,7 @@ permissions or valid token.
 
 # Add cryptocurrencies to User's Account
 
-Add a cryptocurrency to the user account. The coins are unique
+Add a cryptocurrency to the user account. The coins are unique entries
 
 **URL** : `/api/coins/add`
 
