@@ -1,5 +1,5 @@
 module.exports = {
-    PORT: process.env.PORT || 3000,
+    PORT: process.env.PORT || 8080,
     JWT_KEY: process.env.JWT_KEY || 'wolox',
     JWT_ALGORITHM: process.env.JWT_ALGORITHM || 'HS256',
     JWT_LIFETIME: process.env.JWT_LIFETIME || 86400,

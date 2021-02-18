@@ -86,12 +86,11 @@ let controller = {
 
         const payload = {
           sub: user._id,
-          exp: Date.now() + parseInt(config.JWT_LIFETIME),
           username: user.username
         };
 
-        const token = jwt.sign(JSON.stringify(payload), config.JWT_KEY, {
-          algorithm: config.JWT_ALGORITHM
+        const token = jwt.sign(payload, config.JWT_KEY, {
+          expiresIn: config.JWT_LIFETIME // expires
         });
         res.status(200).json({
           data: {

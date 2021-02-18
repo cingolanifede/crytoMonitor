@@ -79,7 +79,7 @@ let controller = {
       } else {
         desc = true;
       }
-      console.log('Desc == ', desc);
+      // console.log('Desc == ', desc);
       const user = await User.findOne({
         username
       });
@@ -133,8 +133,9 @@ let controller = {
   },
   getUserCoin: async (req, res) => {
     try {
+      const username = req.user.username;
       const currencies = await Coin.find({
-        username: req.params.username
+        username
       });
       res.setHeader('Content-Type', 'application/json');
       res.status(200).json({
@@ -148,7 +149,13 @@ let controller = {
   },
   getCoinById: async (req, res) => {
     try {
-      const coinType = req.query.currency;
+      const username = req.user.username;
+      const user = await User.findOne({
+        username
+      });
+      // console.log(username,user);
+
+      const coinType = user.currency;
       const url = 'https://api.coingecko.com/api/v3/coins/' + req.params.id;
       const response = await Helper.doRequest(url);
 
@@ -157,9 +164,10 @@ let controller = {
         name: response.name,
         image: response.image,
         price: {
-          currency: coinTypse,
+          currency: coinType,
           value: response.market_data.current_price[coinType]
-        }
+        },
+        last_updated: response.last_updated
       };
       res.setHeader('Content-Type', 'application/json');
       res.status(200).json({

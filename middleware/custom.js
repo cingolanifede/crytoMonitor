@@ -6,7 +6,7 @@ let middlewares = {
         passport.authenticate('jwt', {
             session: false
         }, (err, user, info) => {
-            console.log('Estrategia jwt');
+            // console.log('Estrategia jwt');
             //si hubo un error relacionado con la validez del token (error en su firma, caducado, etc)
             if (info) {
                 return next(new error_types.Error401(info.message));

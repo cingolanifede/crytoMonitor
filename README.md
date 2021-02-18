@@ -21,7 +21,7 @@ What things you need to install the software and how to install them
 
 ## Running the server
 
-- Create `.env` file in root directory and define the constants.
+- Create `.env` file in root directory and define the constants. Default configuration settings is in config.js file. Server should be running on http://localhost:8080.
 - Run `npm start` to start the server.
 
 ```
@@ -55,7 +55,6 @@ DBNAME=dbname
 - Go to `test` folder in project directory.
 - Run `npm run test` to start the server.
 
-
 ## Built With
 
 - [Express](https://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js
@@ -64,6 +63,7 @@ DBNAME=dbname
 # REST API
 
 The REST API to the example app is described below.
+
 # User Routes
 
 # Create User's Account
@@ -361,7 +361,7 @@ Show a single Account if current User has access permissions to it.
 
 **URL** : `/api/coins/crypto/:id`
 
-**URL Parameters** : `id=[string]` where `id` is the cryptocurrency id.
+**URL Parameters** : `id=[string]` where `id` is the cryptocurrency id you got from previous endpoint. Example `id=bitcoin`
 
 **Method** : `GET`
 
@@ -386,13 +386,18 @@ User is at least one of the following in relation to the Account requested:
 ```json
 {
   "data": {
-    "currency": "ars",
-    "_id": "602adc95f17a544b287147e7",
-    "username": "xxxxxxxx",
-    "password": "$2b$10$22mQh3dBX8dxssxs.rx2KmoxNd.U.WeYRy1jeuaqop4lRxene4mfTWR9Yq",
-    "createdAt": "2021-02-15T20:41:57.074Z",
-    "updatedAt": "2021-02-15T20:41:57.074Z",
-    "__v": 0
+    "symbol": "btc",
+    "name": "Bitcoin",
+    "image": {
+      "thumb": "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png?1547033579",
+      "small": "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579",
+      "large": "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
+    },
+    "price": {
+      "currency": "ars",
+      "value": 4570009
+    },
+    "last_updated": "2021-02-18T11:52:48.732Z"
   }
 }
 ```
@@ -472,13 +477,15 @@ Provide name of Account to be created. All fields required.
 
 ```json
 {
+  "message": "Coin added",
   "data": {
-    "currency": "ars",
-    "_id": "602adc95f17a544b287147e7",
-    "username": "usernamexxxxx",
-    "password": "$2b$10$22mQh3dBX8d.rx2KmoxNd.U.WeYRy1jeuaqop4lRxene4mfTWR9Yq",
-    "createdAt": "2021-02-15T20:41:57.074Z",
-    "updatedAt": "2021-02-15T20:41:57.074Z",
+    "_id": "602e50f3a5f66431f0b5c44a",
+    "crypto": "bitcoin",
+    "symbol": "btc",
+    "name": "Bitcoin",
+    "username": "myusername",
+    "createdAt": "2021-02-18T11:35:15.600Z",
+    "updatedAt": "2021-02-18T11:35:15.600Z",
     "__v": 0
   }
 }
@@ -523,7 +530,7 @@ Provide name of Account to be created. All fields required.
 
 # Show user top N crypto currencies
 
-It must be possible to obtain the top N of cryptocurrencies of a user
+It must be possible to obtain the top N of cryptocurrencies of a user. Currency displayed `ars`, `usd`, `eur`.
 
 **URL** : `/api/coins/topN`
 
@@ -554,21 +561,20 @@ User is at least one of the following in relation to the Account requested:
 ```json
 [
     {
-        "symbol": "zcn",
-        "name": "0chain",
+        "symbol": "btc",
+        "name": "Bitcoin",
         "image": {
-            "thumb": "https://assets.coingecko.com/coins/images/4934/thumb/0_Black-svg.png?1600757954",
-            "small": "https://assets.coingecko.com/coins/images/4934/small/0_Black-svg.png?1600757954",
-            "large": "https://assets.coingecko.com/coins/images/4934/large/0_Black-svg.png?1600757954"
+            "thumb": "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png?1547033579",
+            "small": "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579",
+            "large": "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
         },
-        "last_updated": "2021-02-15T22:14:16.442Z",
+        "last_updated": "2021-02-18T12:00:10.387Z",
         "currency": {
-            "ars": 58.36,
-            "usd": 0.659741,
-            "eur": 0.543878
+            "ars": 4571428,
+            "usd": 51392,
+            "eur": 42568
         }
-    },
-    ...
+    }, ...
 ]
 ```
 
