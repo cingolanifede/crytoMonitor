@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const path = require('path');
 const cors = require('cors');
+const logger = require('morgan');
 const config = require('./config');
 const mongoDb = require('./helpers/connection');
 require('./authentication');
@@ -27,6 +28,7 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 //conectamos todos los middleware de terceros
+app.use(logger('dev')); //for develop
 app.use(bodyParser.urlencoded({
     extended: false
 }));
