@@ -24,7 +24,7 @@ passport.use(new LocalStrategy({
         }
         return done(null, user); //login ok
     } catch (error) {
-        done(null, error); //login ok
+        done(null, error); //login error
     }
 }));
 
@@ -44,6 +44,6 @@ passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
         }
         return done(null, user); //login ok
     } catch (error) {
-        done(null, data); //login ok
+        done(null, false); //login ok
     }
 }));
